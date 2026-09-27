@@ -1,5 +1,8 @@
 # Dogfood — Hackathon Submission & Judging Portal
 
+[![CI](https://github.com/broforce6909-cmd/DogFood/actions/workflows/ci.yml/badge.svg)](https://github.com/broforce6909-cmd/DogFood/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A self-hostable platform for running a hackathon end to end: registration,
 teams, submissions, a public gallery, judge assignment and scoring (scored
 rubric or pairwise comparison), community voting, and results.
@@ -707,6 +710,3 @@ Known gaps inside what *is* built more generally:
 ## License
 
 [MIT](LICENSE).
-#   D o g F o o d  
- #   D o g F o o d  
- 
