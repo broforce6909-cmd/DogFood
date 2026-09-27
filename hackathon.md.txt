@@ -1,0 +1,525 @@
+
+Build the platform
+that will judge you.
+Free · $2,500 in prizes
+
+
+Thirty-five hackathons in, across 85 countries, we know exactly what a submission and judging platform should do. So does every organizer who has ever run one. What none of us has is a modern, open, self-hostable platform that does it. This is the hackathon where you build it. The winning project is the one we run.
+
+HACKATHON RAPTORS ™
+[ 01 / BY THE NUMBERS ]
+UNIT / N-01 +
+35
+hackathons Hackathon Raptors has run, across 85+ countries. The spec for this event comes out of that.[15]
+
+UNIT / N-02 +
+0
+major hackathon platforms publish an official public API. The whole ecosystem runs on scrapers and CSV export.[14]
+
+UNIT / N-03 +
+5 hours
+for one judge to score 30 projects, by the largest platform's own estimate.[1]
+
+UNIT / N-04 · COUNTDOWN
+to build the thing that replaces all of it.
+
+[ 02 / THE PROBLEM ]
+Running a hackathon is a data problem wearing a party hat.
+FIG. 01 — EVENT PIPELINE / 10 STAGES
+FAILURE SURFACE: STAGE 07
+01
+Registration
+02
+Teams
+03
+Submissions
+04
+Eligibility
+05
+Assignment
+06
+Scoring
+07
+Normalization
+08
+Results
+09
+Certificates
+10
+Archive
+Registration, teams, submissions, eligibility, judge assignment, scoring, normalization, results, certificates, and an archive somebody can query two years later. Ten stages, each with its own state, each feeding the next. Get one wrong and the part that suffers is the judging, which is the part participants actually came for.
+
+Hackathon Raptors has run thirty-five events on this pipeline, across 85 countries and roughly a dozen a year. That is where the specification for this hackathon comes from. We know which stage breaks first, which one nobody budgets for, and which one every organizer ends up doing by hand on the last night. We have opinions earned the expensive way.
+
+The obvious question is why nobody just uses the platforms that already exist. We studied them closely, and the answer is more interesting than "they cost money."
+
+The incumbents converged. Devpost, Devfolio, TAIKAI, DoraHacks, HackerEarth and Unstop all ship the same nine things: an event microsite, registration, team formation, project submission, a public gallery, judge scoring, community voting, an organizer dashboard, and a CSV export.[2][6][9][11] That list is not exotic. It is a weekend of work for a team that knows what it is doing.
+
+Then they stopped. The largest platform in the category cannot weight its judging criteria differently. Its own documentation tells organizers who need weighted criteria to judge offline in a spreadsheet.[1] Devfolio advertises "automatic score normalization" as a headline feature and, like everyone else, publishes nothing about how it works.[6][7] Community voting is universally conceded to be gameable: the standard advice is to keep the prize small and hide results until you have manually reviewed the votes.[1] And not one of them has an official public API, so the integration layer of an entire industry is unofficial scrapers and downloaded spreadsheets.[14]
+
+Build the platform that will judge you.
+
+[ PULL QUOTE / DEGRADED · 1-BIT ]
+Meanwhile the open-source tier proves the appetite is real. Gavel came out of HackMIT with a genuine idea inside it: stop asking judges for absolute scores and ask them which of two projects is better, then recover a global ranking with a Bradley-Terry estimator.[12] JunctionApp, Dribdat, Quill and Hibiscus all exist and are all self-hostable.[13] What nobody has assembled is a modern, self-hostable, API-first whole that a working organizer can run straight away.
+
+That is the gap. It is real, it is narrow, and it fits in 
+ hours.
+
+Dogfood is a hackathon with one product in it. Everyone builds the same thing against the same spec: a submission and judging portal. We publish the spec, a real anonymised dataset, and an acceptance suite you run against your own build. You ship it open source. We take the winner, self-host it, and run our events on it.
+
+We are not asking you to build a demo of a platform. We are asking you to build ours.
+
+[ 03 / DOSSIER · WHAT HAPPENS TO THE WINNER ]
+CLASSIFICATION / OPEN
+FILE DF-2026-W
+SHEET 1 OF 1
+REV 2.6
+What happens to the winner
+The part every other hackathon leaves vague, stated plainly.
+
+01 / You keep your work.
+Ship under MIT or Apache-2.0. The repo is yours. We do not ask for an assignment, a transfer, a CLA, or an exclusivity clause. There is nothing to sign.
+
+02 / We fork it and run it.
+The winning project gets forked, self-hosted, and put into production for Hackathon Raptors events. That is the prize behind the prize.
+
+03 / You get credited where it counts.
+Not a thank-you tweet. A credit line on every event page the platform powers, for as long as it powers them.
+
+04 / We upstream back.
+Every fix, hardening pass and feature we add on top gets sent back to your repository as a pull request. If you want them, take them. If you have moved on, the fork carries on and the credit stays.
+
+05 / This is not a maybe.
+We run roughly a dozen events a year and we intend to run the next decade of them on whatever wins. We are not shopping for inspiration. We are commissioning software, in the open, and paying for it.
+
+/// One honest caveat, because you deserve it before you spend a weekend: if the top entries are close, we may adopt one and borrow ideas from another, with credit to both. We will say so publicly and in detail. What we will not do is quietly take your architecture and call it ours.
+
+[ 04 / THE TIER LADDER ]
+The Tier Ladder
+No tracks. One product, four tiers. Every team builds against the same published spec, and your score is how far up the ladder you climbed and how cleanly you did it.
+
+T1
+Core
+[ LOCKED ]
+Required. A submission that does not clear T1 is not judged. This is the floor, not the target.
+
+→
+Authentication and sessions
+→
+A real role model: visitor, participant, judge, organizer, admin
+→
+Event creation with configurable dates, tracks and prizes
+→
+Team formation by invite link
+→
+Project submission with draft-and-edit until the deadline
+→
+Deadline enforcement that actually holds
+→
+Public gallery with search and filter
+Reference: the submission field set is stable across every platform we studied. Name, tagline, long description, thumbnail, image gallery, hosted demo video URL, repository URL, live link, tech tags, track, plus organizer-defined custom questions.[4][5]
+
+T2
+Judging
+[ LOCKED ]
+Where the real engineering starts.
+
+→
+Judge invitation and assignment, by batch or algorithmically
+→
+Scoring against a weighted, organizer-configurable rubric. The market leader cannot weight criteria at all[1], and its closest rival ships one fixed five-criterion rubric that every event on the platform shares[8]
+→
+Role isolation, enforced in the backend. A judge must never see another judge's scores. A track judge must never see another track. If this only works because the UI hides a button, it does not work.
+→
+Live progress dashboard so an organizer can see who has not started
+→
+Cross-judge normalization, with your method documented and defended
+→
+CSV export at every stage
+T3
+Public
+[ LOCKED ]
+→
+Community voting with configurable access: open link, email-gated, or authenticated[3]
+→
+Or something better than one-person-one-vote, if you can defend it. Quadratic voting, where casting n votes on one project costs the square root of n in influence, is the most credible attempt anyone has shipped at stopping a loud minority from deciding the outcome[10]
+→
+Comments on gallery projects
+→
+Results hidden from everyone but organizers during the voting window[1]
+→
+Randomised project ordering on ballots, to kill position bias[3]
+→
+Anti-abuse that means something: rate limits, duplicate detection, and an audit trail an organizer can read without a database client
+T4
+Stretch
+[ LOCKED ]
+→
+A REST API and webhooks covering every action the UI can take
+→
+Certificate and record generation
+→
+Signed, publicly verifiable judge participation records
+→
+An embeddable gallery widget
+→
+Bulk import and export, so an organizer can leave as easily as they arrived
+FIG. 04 — JUDGE ASSIGNMENT / BATCHED, DISJOINT
+NO JUDGE SEES A PEER'S BALLOT
+JUDGES
+PROJECTS
+J-01
+J-02
+J-03
+J-04
+P-118
+P-204
+P-391
+BATCH 03 / 40 PROJECTS · 30 JUDGES · 3 REVIEWS PER PROJECT
+FIG. 02 — ROLE ISOLATION MATRIX / BACKEND-ENFORCED
+● EXPECTED
+Actor	Own scores	Peer scores	Other track	Aggregate	Audit log
+VISITOR	✗	✗	✗	✗	✗
+PARTICIPANT	✗	✗	✗	✗	✗
+JUDGE	+	✗	✗	✗	✗
+ORGANIZER	+	+	+	+	+
+ADMIN	+	+	+	+	+
++ PERMITTED  ·  ✗ DENIED AT THE API, NOT IN THE UI  ·  VERIFIED BY ACCEPTANCE SUITE T2.03
+Climb honestly. A clean, correct T2 scores above a broken T4 every time. Judges are reading for what works, not what is listed in your README.
+
+[ 05 / WHAT COUNTS AS DONE ]
+What counts as done
+The one rule that makes this judgeable, and it is verifiable in about a minute.
+
+docker compose up produces a working portal. On localhost. Seeded with the fixture data we publish at kickoff. No cloud account, no API key, no external service, no signup.
+
+The acceptance suite runs against your build and prints a tier-by-tier pass report. Publish that output in your repository. A judge should be able to confirm which tier you reached without reading a line of your code.
+
+[ CLOSED LOOPHOLES, NAMED UP FRONT ]
+→
+A hosted database service is a dependency on someone else's uptime and someone else's invoice. It must run locally.
+→
+Authentication-as-a-service is the same problem wearing a nicer hat. Build it or use something self-hosted.
+→
+A staging URL is not a submission. We need to run it, not visit it.
+→
+"Works on my machine" has never once been true.
+If it does not come up on a laptop with the network off, we cannot adopt it, and adoption is the entire point of the event.
+
+[ 06 / DELIVERABLES ]
+Deliverables
+After  we want software an organizer could run. Not a design system. Not a slide deck.
+
+A working portal. It starts with one command, seeds itself, and takes a project from submission through judging to published results.
+
+An acceptance report. The output of our suite against your build, committed to the repository. This is your tier claim and your receipt at the same time.
+
+Honest documentation. ARCHITECTURE.md for how it fits together, DATA-MODEL.md for the schema and how an organizer gets data in and out, JUDGING.md for your scoring maths. These are read by judges and they carry weight.
+
+You'll submit:
+→
+Public GitHub repo under an OSI-approved license
+→
+docker compose up to a seeded, working portal
+→
+acceptance-report.txt: the suite output, tier by tier
+→
+README.md: what it does, how to run it, what it does not do yet
+→
+ARCHITECTURE.md: the shape of the system and why
+→
+DATA-MODEL.md: schema, plus import and export paths
+→
+JUDGING.md: assignment strategy, scoring maths, normalization method, defended
+→
+5-minute demo video walking one full event lifecycle: create, submit, judge, publish
+[ ANATOMY OF A SUBMISSION ]
+What a serious submission looks like on disk.
+
+ your-portal/
+ ├── README.md              ← what it does, how to run, honest limits
+ ├── ARCHITECTURE.md        ← the shape of the system and why
+ ├── DATA-MODEL.md          ← schema, import and export paths
+ ├── JUDGING.md             ← assignment, scoring maths, normalization
+ ├── docker-compose.yml     ← one command to a seeded, running portal
+ ├── src/                   ← your code, all of it written this weekend
+ ├── tests/                 ← your own tests, beyond the acceptance suite
+ ├── acceptance-report.txt  ← our suite's output, tier by tier
+ ├── LICENSE                ← MIT or Apache-2.0
+ └── .dogfood.toml          ← tiers claimed, one-line pitch
+One command runs it. docker compose up, seeded, working. If a judge has to read your CI config to figure out how to start it, you have failed this rule.
+
+The acceptance report is the receipt. Claim T3 in your README and pass T2 in the report, and you score T2 with a note about the gap.
+
+JUDGING.md counts. It feeds straight into Judging Integrity (25%). "We averaged the scores" is an answer, and it is a weak one. Tell us what you did about the judge who marks everything a 3.
+
+Honest tier claims beat inflated ones. A team that says "we reached T2, here is the T3 work we started and did not finish" scores above a team claiming T4 with three broken endpoints.
+
+Layout is advisory. Judges read what you actually ship.
+
+[ 07 / SCORING ]
+Scoring
+Each project is rated on a 5-point scale across four weighted criteria. Final ranking is the weighted average across all judges who evaluated the project.
+
+Tier Completion & Correctness
+40%
+How far up the ladder you got, verified by the acceptance suite rather than by your README. T1 is a gate, not a score. Above that, correctness beats breadth: a clean T2 outranks a T4 with three features that half-work. Honest gap reporting is rewarded, inflated claims are penalised here.
+
+Judging Integrity
+25%
+The hard part, weighted like it. Is role isolation enforced in the backend or painted on the frontend? Is your normalization method documented and defensible, or did you average the scores and hope? Is there an audit trail an organizer can actually read? Did you think about vote abuse before a judge asked?
+
+Adoptability & Operability
+20%
+Could we run this straight away? One command to running. Seeded with real data. Documentation a stranger can follow without asking you a question. A migration path in and out, because a platform you cannot leave is a trap. A clean license with no surprises.
+
+Code Quality & Innovation
+15%
+Does it read as idiomatic to a senior reviewer in your stack? Is the schema one a database person would defend? And the part we cannot specify in advance: the decision that made a judge stop and say they would steal it.
+
+FIG. 03 — WEIGHT DISTRIBUTION / FINAL SCORE
+Σ = 100 · SCALE 1–5
+40 TIER
+25 INTEGRITY
+20 ADOPT
+15 CODE
+RAW JUDGE SPREAD / 5 JUDGES
+σ = 0.94 · UNCALIBRATED
+NORMALIZED / SAME 5 JUDGES
+σ = 0.31 · METHOD DOCUMENTED
+RANK MOVEMENT
+▲ 4  PROJECT 17
+▲ 1  PROJECT 04
+▼ 3  PROJECT 22
+▼ 6  PROJECT 09
+FIXTURE SET · 40 PROJECTS
+[ BONUS CHALLENGES ]
+Optional. Pick one and nail it. Do not half-do all four.
+
+Challenge	Difficulty	Points
+Normalization Proof	Hard	+5
+Pairwise Mode	Hard	+5
+Threat Model	Medium	+3
+API First	Medium	+3
++16
+MAXIMUM IF YOU TOOK ALL FOUR. NOBODY SHOULD.
+1
+DONE PROPERLY BEATS FOUR STARTED.
+Normalization Proof
++5 · Hard
+Implement cross-judge score normalization and prove it works on the fixture data. Show the raw scores, the normalized scores, and the ranking change. Document the method well enough that a statistician would not wince. Every commercial platform claims to do this and none of them will tell you how.[6][7]
+
+Pairwise Mode
++5 · Hard
+Ship pairwise comparison as an alternative judging mode: show a judge two projects, ask which is better, recover a global ranking with a Bradley-Terry style estimator. This is the Gavel approach, and it sidesteps cross-judge calibration entirely by never asking for an absolute score.[12] Hard to get right, extremely satisfying when it works.
+
+Threat Model
++3 · Medium
+A written, defensible threat model for voting and submission abuse. Sybil votes, ballot stuffing, submission scraping, judge collusion, deadline gaming. Name the attacks you stopped, and name the ones you did not. The honest list is worth more than the heroic one.
+
+API First
++3 · Medium
+Every action available in the UI is available through a documented API, with a published OpenAPI spec. Nobody else in this category has one.[14] Be the first.
+
+[ 08 / OUT OF SCOPE ]
+Out of Scope
+Save yourself the trouble. These will not score well.
+
+09
+WAYS TO SCORE NOTHING
+1
+TEST THEY ALL FAIL
+We are not against using a framework. We are against handing us something we cannot run.
+
+01
+✗
+Design mockups, Figma files, or a frontend with hardcoded data behind it
+02
+✗
+Anything that needs a cloud account, a hosted database, or an auth provider to start
+03
+✗
+An authentication demo that stops at the login screen
+04
+✗
+A gallery with no judging, or judging with no gallery, this is one product
+05
+✗
+Role checks that live only in the frontend, if I can curl another judge's scores it is not isolation
+06
+✗
+LLM dumps with no architecture document and nobody able to defend the schema in writing
+07
+✗
+Closed source, or a license that is not OSI-approved
+08
+✗
+Anything requiring custom hardware, GUI toolchains, or proprietary services, keep it laptop-friendly
+09
+✗
+A rewrite of an existing open-source platform with the name changed
+SCHEMA / AUTH / SUBMISSION
+JUDGING / NORMALIZATION
+ACCEPTANCE / DOCS / VIDEO
+[ PRE-EVENT ]
+
+[ 10 / PRIZES ]
+$2,500 total prize pool.
+FIG. 06 — POOL ALLOCATION / USD 2,500
+1ST — GRAND PRIZE
+$800
+32%
+2ND — RUNNER-UP
+$500
+20%
+3RD PLACE
+$350
+14%
+4TH PLACE
+$200
+8%
+5TH PLACE
+$150
+6%
+BEST JUDGING ENGINE
+$100
+4%
+WRITE UP QUEST — $100 × 4
+$400
+16%
+COMPARTMENT / P-01
+$800
+1st Place
+Grand Prize, and the one we run. The portal that cleared the ladder honestly, enforced its own rules in the backend, started with one command, and read like software somebody intends to maintain. This is the project Hackathon Raptors forks and puts into production.
+
+2
+COMPARTMENT / P-02
+$500
+2nd Place
+Runner-Up. Exceptional work across the board. Strong tier completion, defensible judging maths, documentation that respects the reader. Close enough that we will be reading it for ideas.
+
+2
+1
+3
+COMPARTMENT / P-03
+$350
+3rd Place
+Third Place. A standout, either for how far it climbed or for one decision nobody else made.
+
+4
+COMPARTMENT / P-04
+$200
+4th Place
+Fourth Place. Finished the climb and left something behind worth reading. Solid tier completion, honest scope, no shortcuts hiding in the backend.
+
+5
+COMPARTMENT / P-05
+$150
+5th Place
+Fifth Place. Made the top five out of everyone who started.
+
+COMPARTMENT / P-06
+$100
+Best Judging Engine
+For the team whose judging layer was the most defensible. Assignment strategy, normalization method, role isolation, audit trail. The category prize for the problem the whole industry quietly avoids.
+
+COMPARTMENT / P-07 · SIDE QUEST
+$400
+Write Up Quest
+Side quest. $100 x 4.
+
+ Explaining what actually happened is rarer, and more useful to everyone else. So we are paying for it.
+
+What it is.
+Publish a write-up of your build. The schema you would redo. The normalization maths that fought you and won. The role-isolation bug you found at hour 60. The feature you cut and do not regret. The part where you realised the spec was harder than it looked.
+How they are judged.
+On insight, not follower count. We are reading for technical substance: the debugging story, the benchmark that disappointed you, the design you abandoned and why. A 200-follower account writing something genuinely useful beats a viral thread that says nothing. Small accounts, this one is winnable.
+Where.
+X, LinkedIn, Dev.to, your own blog, any developer-focused platform. Your call. Tag Hackathon Raptors.
+Prize.
+Top 4 write-ups, $100 each.
+When.
+Write any time from kickoff. Submissions close when the quest closes. Winners announced with the main results.
+Optional. Does not affect your main score.
+
+[ 11 / RULES ]
+Rules
+What counts as a valid submission.
+
+CHECKLIST · 09 ITEMS
+01
+Open Source, OSI-Approved
+02
+One Command To Running
+03
+Clear T1 Or You Are Not Judged
+05
+No Hosted-Service Dependency
+06
+Claim Your Tiers Honestly
+07
+Team Size
+08
+Source Code Public
+09
+AI Tools Are Expected
+If we cannot run it, we cannot adopt it. Every rule below is downstream of that one.
+
+01 Open Source, OSI-Approved
+MIT or Apache-2.0 preferred. Public at submission. You keep ownership of your repository. We do not ask for an assignment, a transfer, or a CLA.
+
+02 One Command To Running
+docker compose up brings up a working, seeded portal on a laptop. No cloud account, no hosted service, no external API. If we cannot run it, we cannot adopt it.
+
+03 Clear T1 Or You Are Not Judged
+T1 is the floor. Auth, roles, event, submission, gallery. A project that does not reach it is not scored, however good the parts are.
+
+05 No Hosted-Service Dependency
+It runs offline on a laptop. This is not an aesthetic preference, it is the condition for the winner being adoptable at all.
+
+06 Claim Your Tiers Honestly
+Declare the tiers you reached in .dogfood.toml. The acceptance report is the receipt. Overclaiming costs more than the tier was worth.
+
+07 Team Size
+1-4 people. Solo entries welcome, though this brief rewards a pair. Find teammates on the Hackathon Raptors Discord before or during the event.
+
+08 Source Code Public
+GitHub repository, public at submission. Anonymous-username submissions accepted, but the team must be reachable for written follow-up by judges during the evaluation window.
+
+09 AI Tools Are Expected
+Claude Code, Cursor, Aider, Copilot, local models, bring whatever you have. We do not gatekeep on whether you used AI. We gatekeep on whether the thing holds up and whether somebody on the team can defend the schema in writing. The acceptance report, ARCHITECTURE.md and JUDGING.md are the receipts.
+
+[ 12 / WHO THIS IS FOR ]
+If you have ever filled in a hackathon submission form and thought "I could build this, and better", here is your invitation to prove it.
+Full-Stack Builders
+This is a whole product in a weekend: auth, roles, forms, gallery, dashboards, exports. If you like shipping the entire thing yourself, the tier ladder is built for you.
+
+Start at: T1 → T2
+Backend & API Engineers
+The interesting problems are all yours: role isolation that survives a curl, assignment algorithms, an export path that does not lose data, an API nobody else in this category bothered to build.
+
+Start at: T2 → T4
+Frontend & Design-System People
+The judge console and the public gallery are the product. Thirty projects to score in five hours is a UX problem before it is anything else.[1] Make that not miserable and you have done something the incumbents have not.
+
+Start at: T1 → T3
+Data & Algorithms People
+Cross-judge normalization and pairwise ranking are the genuinely hard parts, and the two Hard bonuses live here. Bradley-Terry, Crowd-BT, or something better you can defend.[12]
+
+Start at: T2 + bonuses
+Security Engineers
+Role isolation, vote abuse, sybil resistance, audit trails. Every platform in this space treats community voting as a known-gameable feature they mitigate with policy rather than engineering.[1] Do better.
+
+Start at: T2 → T3 + Threat Model
+DevOps & Self-Hosting Folks
+"One command to running" is not a nice-to-have here, it is 20% of the score and the reason the winner gets adopted. If you have opinions about how software should ship, this brief is downstream of all of them.
+
+
+Senior engineers, architects and technical leaders who have built and operated evaluation systems, run production software at scale, and sat on the other side of a judging form knowing it could have been better.
+
+→
+Every project is reviewed independently, on structured forms, across the window.
+→
+Judges never see one another's ballots. The platform you build has to hold that line too.
+→
+Weighted scores and written feedback go to every team, placed or not.
