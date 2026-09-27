@@ -1,0 +1,26 @@
+# Pinned for reproducible builds. Verified to install on CPython 3.12 (the
+# container runtime) and 3.14 (a developer laptop), so `pip install -r` works
+# outside Docker too.
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+sqlalchemy==2.0.52
+psycopg[binary]==3.3.5
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-multipart==0.0.32
+argon2-cffi==25.1.0
+email-validator==2.3.0
+# Ed25519 signing for certificates (app/signing.py). Asymmetric rather than the
+# HMAC this replaced: a verifier now needs only the public key, published at
+# GET /api/signing/public-keys, never the server's own secret.
+cryptography==50.0.1
+alembic==1.20.0
+# Visual certificates (app/certificate_render.py): weasyprint draws the same
+# signed record /verify already renders as HTML into a printable PDF;
+# pymupdf rasterizes that PDF's one page into a PNG rather than standing up a
+# second rendering path; qrcode embeds the link back to /verify. WeasyPrint
+# needs Pango/GObject/Cairo at the OS level -- see backend/Dockerfile.
+weasyprint==70.0
+qrcode==8.2
+pymupdf==1.28.2
+pillow==12.3.0
