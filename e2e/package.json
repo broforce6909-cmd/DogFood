@@ -1,0 +1,12 @@
+{
+  "name": "dogfood-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-browser end-to-end coverage of the critical user journeys, separate from the backend's own pytest suite and the frontend's typecheck/build. Runs against a fully up docker compose stack -- it drives the UI exactly as a person would, never the database or the API directly except to look up an id a real user could not type by hand (see tests/certificate.spec.ts).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1"
+  }
+}
