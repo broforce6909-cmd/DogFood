@@ -1,0 +1,6 @@
+# Shell scripts and Dockerfiles run inside Linux containers — they must keep LF
+# endings even when the repo is cloned on Windows.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

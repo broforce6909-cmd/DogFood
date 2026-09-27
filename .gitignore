@@ -1,0 +1,26 @@
+# Node
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Local env overrides (defaults live in docker-compose.yml)
+.env
+.env.local
+
+# Local artifacts
+*.log
+.scratch/
+
+# Playwright (e2e/)
+/e2e/test-results/
+/e2e/playwright-report/
+/e2e/blob-report/
