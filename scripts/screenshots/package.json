@@ -1,0 +1,13 @@
+{
+  "name": "dogfood-screenshots",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Captures the README's first-impression screenshots against a running, seeded docker compose stack.",
+  "type": "commonjs",
+  "scripts": {
+    "capture": "node capture.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.1"
+  }
+}
