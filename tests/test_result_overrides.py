@@ -75,6 +75,43 @@ def test_overriding_a_submission_requires_a_reason(
     assert response.status_code == 422
 
 
+def test_a_blank_reason_is_a_422_not_a_500(
+    client: TestClient, auth, make_user, db, tiered_event
+) -> None:
+    """`min_length` counts spaces, so "   " used to pass validation, hit
+    `ck_result_overrides_reason_not_blank` and come back as an unhandled 500.
+    A reason of only whitespace has to be the same 422 as an empty one, and
+    must not leave a row behind."""
+    event, subs = tiered_event()
+    headers = auth(make_user(Role.ORGANIZER))
+
+    for blank in ("   ", "\t", " \n "):
+        response = set_override(client, event.slug, subs[0].id, headers, "neither", reason=blank)
+        assert response.status_code == 422, (blank, response.text)
+
+    assert db.execute(
+        select(ResultOverride).where(ResultOverride.submission_id == subs[0].id)
+    ).first() is None
+
+    # ...and the same for clearing, which also writes the reason.
+    set_override(client, event.slug, subs[0].id, headers, "neither")
+    for blank in ("   ", "\t"):
+        response = clear_override(client, event.slug, subs[0].id, headers, reason=blank)
+        assert response.status_code == 422, (blank, response.text)
+
+
+def test_a_reason_is_stored_trimmed(
+    client: TestClient, auth, make_user, tiered_event
+) -> None:
+    event, subs = tiered_event()
+    response = set_override(
+        client, event.slug, subs[0].id, auth(make_user(Role.ORGANIZER)), "neither",
+        reason="  Rule violation found  ",
+    )
+    assert response.status_code == 200, response.text
+    assert response.json()["override_reason"] == "Rule violation found"
+
+
 def test_overriding_is_staff_only(
     client: TestClient, auth, make_user, tiered_event
 ) -> None:

@@ -42,6 +42,48 @@ test('a judge can quick-pick a score and move focus with the keyboard', async ({
   await expect(scoreInputs.first()).toHaveValue('3.0');
 });
 
+test('typing a decimal into a score is not eaten by the 1-5 quick-pick', async ({ page }) => {
+  await login(page, 'judge.whitfield@example.com');
+  await page.goto('/judging');
+  await page.locator('a[href^="/judging/"]:not([href="/judging/calibration"])').first().click();
+  await expect(page).toHaveURL(/\/judging\/.+/);
+
+  const scoreInputs = page.locator('input[type="number"][step="0.1"]');
+  await scoreInputs.first().focus();
+
+  // The fraction digits here are all in 1-5, the very keys the quick-pick owns.
+  await page.keyboard.type('4.3');
+  await expect(scoreInputs.first()).toHaveValue('4.3');
+
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.type('2.5');
+  await expect(scoreInputs.nth(1)).toHaveValue('2.5');
+
+  // Leaving a field ends the decimal: a digit is a quick-pick again.
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('4');
+  await expect(scoreInputs.nth(2)).toHaveValue('4');
+});
+
+test('the ballot shortcuts leave modifier combos and other inputs alone', async ({ page }) => {
+  await login(page, 'judge.whitfield@example.com');
+  await page.goto('/judging');
+  await page.locator('a[href^="/judging/"]:not([href="/judging/calibration"])').first().click();
+  await expect(page).toHaveURL(/\/judging\/.+/);
+
+  const scoreInputs = page.locator('input[type="number"][step="0.1"]');
+  const before = await scoreInputs.first().inputValue();
+  await scoreInputs.first().focus();
+
+  // Ctrl+K belongs to the palette; digits typed into its search box belong to it too.
+  await page.keyboard.press('Control+k');
+  const dialog = page.getByRole('dialog', { name: 'Quick navigation' });
+  await expect(dialog).toBeVisible();
+  await page.keyboard.type('2026');
+  await expect(page.getByRole('textbox', { name: 'Search' })).toHaveValue('2026');
+  await expect(scoreInputs.first()).toHaveValue(before);
+});
+
 test('a judge can pick a pairwise winner with the arrow keys', async ({ page }) => {
   // Pairwise is off by default on the seeded event; an organizer turns it on
   // through the same settings form beat #5.5 of the demo script uses.

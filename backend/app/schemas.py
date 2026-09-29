@@ -48,6 +48,14 @@ SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 Slug = Annotated[str, StringConstraints(min_length=2, max_length=80)]
 Password = Annotated[str, StringConstraints(min_length=MIN_PASSWORD_LENGTH, max_length=200)]
 ShortText = Annotated[str, StringConstraints(min_length=1, max_length=200)]
+# A reason an admin-oversight action requires. `min_length` alone counts spaces,
+# so "   " would pass it: for the result override that reached
+# `ck_result_overrides_reason_not_blank` and became a 500, and for the removal and
+# disqualification routes it was silently accepted as a "reason". Stripping first
+# makes a blank reason the same 422 as an empty one, and stores the trimmed text.
+RequiredReason = Annotated[
+    str, StringConstraints(strip_whitespace=True, min_length=1, max_length=500)
+]
 # Free-form prose fields (descriptions, help text, custom-question answers) had
 # no length cap at all -- every other string field on the same schemas does.
 # 20,000 characters is far past any legitimate use here and far short of a
@@ -607,7 +615,7 @@ class RegistrationRemovalIn(BaseModel):
     """Same shape and reasoning as `JudgeRemovalIn`/`SubmissionDisqualifyIn`:
     the one deliberately required field on an admin-oversight action."""
 
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 # --------------------------------------------------------------------------- #
@@ -657,7 +665,7 @@ class TeamMemberRemovalIn(BaseModel):
     justification for either; this route is the separate, admin-only one
     that does. Same shape as `JudgeRemovalIn`/`SubmissionDisqualifyIn`."""
 
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 # --------------------------------------------------------------------------- #
@@ -961,14 +969,14 @@ class JudgeRemovalIn(BaseModel):
     docstring), so a reason is mandatory, the one deliberately required field
     in this whole admin-oversight surface."""
 
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 class SubmissionDisqualifyIn(BaseModel):
     """Same shape and reasoning as `JudgeRemovalIn`: the one deliberately
     required field on an otherwise soft, reversible admin action."""
 
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 class JudgeOut(ORMModel):
@@ -1221,11 +1229,11 @@ class ResultOverrideIn(BaseModel):
     one."""
 
     tier: Literal["winner", "community_tier", "neither"]
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 class ResultOverrideClearIn(BaseModel):
-    reason: Annotated[str, StringConstraints(min_length=1, max_length=500)]
+    reason: RequiredReason
 
 
 class ScoringGridCell(BaseModel):

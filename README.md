@@ -123,7 +123,8 @@ with no account and no trust in our own verdict.
 6. As the organizer, open `raptors-winter` → **Judging**: who has not
    started, the weighted rubric, batch assignment with a dry run, and CSV export.
 7. Then **Results**: raw ranking against normalized ranking, the movement between
-   them, and how each judge used the scale. Four of six projects move.
+   them, and how each judge used the scale. Two of six projects move: Foundry
+   rises past Tidemark.
 8. Sign in as any participant and open `raptors-winter` → **Vote**. You have
    100 credits; *n* votes on a project costs *n²*. Try putting 11 on one thing and
    read the refusal.

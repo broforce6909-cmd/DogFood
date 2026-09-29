@@ -170,8 +170,11 @@ export default async function AuditPageView({
 
       <p className="muted" style={{ fontSize: 13 }}>
         Known limit, stated here rather than only in the docs: the log is append-only
-        through the API, but anyone with database access can edit it. Tamper evidence
-        needs hash chaining, which is not built. See{' '}
+        through the API and every entry is hash-chained to the one before it, so a
+        silently edited or deleted row breaks the chain (an admin can check it at{' '}
+        <code>GET /api/audit/verify</code>). Someone with database access who rewrites
+        the whole chain forward would leave nothing inside the database to catch; the
+        newest hash is also written to the API&apos;s own log for that reason. See{' '}
         <code>THREAT-MODEL.md</code> §6.
       </p>
     </main>
