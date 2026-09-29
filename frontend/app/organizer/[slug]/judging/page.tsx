@@ -377,7 +377,7 @@ export default async function OrganizerJudgingPage({
           curl with a bearer token too.
         </p>
         <ul className="inline-list">
-          {['teams', 'submissions', 'judges', 'assignments', 'scores', 'results', 'votes', 'audit'].map((entity) => (
+          {['teams', 'submissions', 'directory', 'judges', 'assignments', 'scores', 'results', 'votes', 'audit'].map((entity) => (
             <li key={entity}>
               <a href={`${PUBLIC_BASE}/api/events/${slug}/export/${entity}.csv`}>{entity}.csv</a>
             </li>
