@@ -970,6 +970,7 @@ def _seed_public(db: Session, event: Event, users: dict[str, User], now: datetim
     event.voting_method = VotingMethod.QUADRATIC
     event.vote_credits = 100
     event.comments_enabled = True
+    event.pairwise_enabled = True
     event.results_public_at = None
     db.flush()
 
